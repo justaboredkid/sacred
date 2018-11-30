@@ -6,6 +6,7 @@ import sacred
 scene = sacred.Scene()
 
 scene.obj("test.json", 5, 10)
+scene.render()
 ```
 
 *Documentation will be here soon.*
