@@ -48,9 +48,9 @@ x (int): position on the x axis
 y (int): position on the y axis
 ```
 ### Scene.box(x=0, y=0, w=t.width - 1, h=t.height - 1, fill=" ")
-Adds a box on terminal. Creates a box around the terminal by default. (Note that a character on the terminal a rectangle, which means that having the same height and width does not create a square.)
+Adds a box on terminal. Creates a box around the terminal by default. (Note that a character on the terminal is a tall rectangle, which means that having the same height and width does not create a square.)
   
-
+  
 *Example:*
 ```
 import sacred
@@ -94,7 +94,7 @@ So if:
 ```
 scene.box(5, 5, 10, 10, fill="*")
 scene.box(6, 6, 10, 10) # the box will be filled by a space character (" ")
-scene.render
+scene.render()
 ```
 then this happens:
 ```
@@ -192,7 +192,7 @@ delay (int): Delay set for printing each line.
 diag (bool):  Determines whether to put a blank line underneath the fill or not.
 ```
 ## sacred.printobj(js, x, y):
-Used internally to print ascii json files. I know that `js` is inaccurate.
+Used internally to print ascii json files. 
 
 Args:
 ```
