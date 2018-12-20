@@ -3,8 +3,14 @@ ASCII art import and terminal graphics. IN PYTHON.
 
 ![sacred library demo](demo.gif)
 
+# Installation
+Clone repo and install:
+```
+python3 setup.py install
+```
+
 # Documentation
-## asciigen
+## asciigen.py
 Python script for generating ascii json files. All you need to do is to grab some ascii art (from the web or somewhere else), use ./asciigen.py to covert it into json, and:
 ```
 import sacred
