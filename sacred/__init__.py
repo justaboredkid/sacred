@@ -1,5 +1,7 @@
 from blessed import Terminal
 from time import sleep
+import os
+import sys
 import json
 
 t = Terminal()
@@ -18,7 +20,11 @@ class Scene(object):
         self.txts.clear()
 
     def obj(self, file, x=0, y=0):  # loads ascii json files
-        with open(file, "r") as o:
+        if not os.path.isabs(file):
+            file = os.path.abspath(os.path.dirname(sys.argv[0])) + "/" + file
+        with open(
+                file, "r"
+        ) as o:  # This needs to read the file in the script's local directory, bug!
             self.objs.append(json.load(o))
             self.pos.append([x, y])
             o.seek(0)
