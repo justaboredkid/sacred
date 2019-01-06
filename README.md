@@ -1,16 +1,165 @@
-# Sacred
+# sacred-tui
 ASCII art import and terminal graphics. IN PYTHON. 
 
 ![sacred library demo](demo.gif)
+
+  Let's say you want something like this in your script:
+```
+ _____________________________,----,__
+|==============================<| /___\          ____,-------------.____
+ `------------------.-----.---.___.--'     __.--'-----------------------`--.__
+                     `._   `.            =======================================
+                    ____`.___`._____,----'     `--------,----------------'
+                   /_|___________-----<       ========,'
+                                 `-.                ,'
+                                    `----.______,--'
+```
+*ASCII art made by Joshua Bell*  
+  
+And what if you wanted it at *exactly*, *precisely* 10 spaces to the right?
+You can do this:
+```
+print("           _____________________________,----,__")
+print("          |==============================<| /___\\          ____,-------------.____")
+print("            `------------------.-----.---.___.--'     __.--'-----------------------`--.__")
+print("                                `._   `.            =======================================")
+print("                              ____`.___`._____,----'     `--------,----------------'")
+print("                              /_|___________-----<       ========,'")
+print("                                            `-.                ,'")
+print("                                              `----.______,--'")
+```
+And add more spaces and `\\` and lose track of which line you added and then restart. **Eww no.**
+  
+
+Or maybe this:
+```
+from blessed import Terminal # pip install blessed
+
+term = Terminal()
+
+print(term.clear)
+
+with open("ent_e.txt", "r") as f: # ent_e.txt contains the ascii art itself
+    ent = f.readlines()
+
+with term.location(10, 0):
+    for line in ent:
+        print(line)
+```
+Wait a minute:
+```
+           _____________________________,----,__
+
+|==============================<| /___\          ____,-------------.____
+
+ `------------------.-----.---.___.--'     __.--'-----------------------`--.__
+
+                     `._   `.            =======================================
+
+                    ____`.___`._____,----'     `--------,----------------'
+
+                   /_|___________-----<       ========,'
+
+                                 `-.                ,'
+
+                                    `----.______,--'
+```                                  
+*AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA the ship is falling apart!!!!*
+  
+
+**Behold, sacred-tui.**
+```
+import sacred
+
+scene = sacred.Scene()
+sacred.clear()
+
+scene.obj("ent_e.json", 10, 0) # ./asciigen.py ent_e.txt ent_e
+scene.render()
+```
+and voilà!
+```
+           _____________________________,----,__
+          |==============================<| /___\          ____,-------------.____
+           `------------------.-----.---.___.--'     __.--'-----------------------`--.__
+                               `._   `.            =======================================
+                              ____`.___`._____,----'     `--------,----------------'
+                             /_|___________-----<       ========,'
+                                           `-.                ,'
+                                              `----.______,--'
+```                                            
+Though you have to convert the ASCII art from txt to the json format that my script uses (by running the script in line 6), there is no hassle for just putting the spaceship a little bit more to the right. Or a bit toward the bottom. Anywhere on the terminal.
+
+***ANYWHERE.***
+
+And using this, you can still make complex scenes like this:
+```
+from blessed import Terminal
+from math import floor
+import sacred
+
+scene = sacred.Scene()
+t = Terminal()
+
+# snippet from https://github.com/justaboredkid/ultimate-tic-tac-toe
+sacred.clear()
+
+scene.box()
+scene.obj("objs/grid.json", floor(t.width / 2) - 12, floor(t.height / 2) - 11)
+scene.txt(
+    t.green("For best gameplay, use numpad and 80x24 terminal"), t.width - 49,
+    t.height - 2)
+scene.txt("1) Single Player", 4, 5)
+scene.txt("2) Local Multiplayer", 4, 6)
+scene.txt("3) Help", 4, 7)
+scene.txt("4) Exit", 4, 8)
+scene.txt(t.bright_yellow("Ultimate Tic Tac Toe TERMINAL EDITION"), 0, 0)
+scene.render()
+```
+  
+```
+Ultimate Tic Tac Toe TERMINAL EDITION------------------------------------------
+|                                                                             |
+|                            . .  |  . .  |  . .                              |
+|                           .|.|. | .|.|. | .|.|.                             |
+|                            | |  |  | |  |  | |                              |
+|   1) Single Player        .|.|. | .|.|. | .|.|.                             |
+|   2) Local Multiplayer     | |  |  | |  |  | |                              |
+|   3) Help                       |       |                                   |
+|   4) Exit                 ------+-------+------                             |
+|                            . .  |  . .  |  . .                              |
+|                           .|.|. | .|.|. | .|.|.                             |
+|                            | |  |  | |  |  | |                              |
+|                           .|.|. | .|.|. | .|.|.                             |
+|                            | |  |  | |  |  | |                              |
+|                                 |       |                                   |
+|                           ------+-------+------                             |
+|                            . .  |  . .  |  . .                              |
+|                           .|.|. | .|.|. | .|.|.                             |
+|                            | |  |  | |  |  | |                              |
+|                           .|.|. | .|.|. | .|.|.                             |
+|                            | |  |  | |  |  | |                              |
+|                                 |       |                                   |
+-------------------------------For best gameplay, use numpad and 80x24 terminal
+```
+[![Maniacal laughter](https://media.giphy.com/media/xUPGcdeU3wvdNPa1Py/giphy.gif)](https://www.youtube.com/watch?v=gY2k8_sSTsE)
+
+
 
 # Installation
 Clone repo and install:
 ```
 python3 setup.py install
 ```
+or use pip:
+```
+pip install blessed-tui
+```
+
+*Note: does not support python2*
 
 # Documentation
-## asciigen.py
+## [asciigen.py](https://github.com/justaboredkid/sacred/blob/master/asciigen.py)
 Python script for generating ascii json files. All you need to do is to grab some ascii art (from the web or somewhere else), use ./asciigen.py to covert it into json, and:
 ```
 import sacred

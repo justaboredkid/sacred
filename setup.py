@@ -1,8 +1,11 @@
 from setuptools import setup
 
+with open("README.md", "r") as fh:
+    long_description = fh.read()
+
 setup(
     name='sacred_tui',
-    version='0.1',
+    version='0.1.0',
     description='Python library for ASCII art import and TUI development',
     url='https://github.com/justaboredkid/sacred',
     author='justaboredkid',
@@ -11,5 +14,9 @@ setup(
     packages=['sacred'],
     install_requires=[
         'blessed',
+    ],
+    classifiers=[
+        'OSI Approved :: GNU General Public License v3 (GPLv3)',
+        'Programming Language :: Python :: 3',
     ],
     zip_safe=False)

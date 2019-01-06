@@ -22,9 +22,7 @@ class Scene(object):
     def obj(self, file, x=0, y=0):  # loads ascii json files
         if not os.path.isabs(file):
             file = os.path.abspath(os.path.dirname(sys.argv[0])) + "/" + file
-        with open(
-                file, "r"
-        ) as o:  # This needs to read the file in the script's local directory, bug!
+        with open(file, "r") as o:
             self.objs.append(json.load(o))
             self.pos.append([x, y])
             o.seek(0)
