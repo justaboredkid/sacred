@@ -142,7 +142,9 @@ Ultimate Tic Tac Toe TERMINAL EDITION------------------------------------------
 |                                 |       |                                   |
 -------------------------------For best gameplay, use numpad and 80x24 terminal
 ```
-[![Maniacal laughter](https://media.giphy.com/media/xUPGcdeU3wvdNPa1Py/giphy.gif)](https://www.youtube.com/watch?v=gY2k8_sSTsE)
+
+  
+![Maniacal laughter](https://media.giphy.com/media/xUPGcdeU3wvdNPa1Py/giphy.gif)
 
 
 
