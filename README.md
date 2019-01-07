@@ -144,7 +144,7 @@ Ultimate Tic Tac Toe TERMINAL EDITION------------------------------------------
 ```
 
   
-![Maniacal laughter](https://media.giphy.com/media/xUPGcdeU3wvdNPa1Py/giphy.gif)
+[Maniacal laughter](https://www.youtube.com/watch?v=gY2k8_sSTsE)
 
 
 
