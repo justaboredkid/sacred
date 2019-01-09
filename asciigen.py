@@ -6,7 +6,7 @@ Note: NOT PERFECT. Adjust stuff yourself.
 
 {"line#":["text", SpaceBeforeText]}
 
-The actual process does not reqiure this script, you can 
+The actual process does not require this script, you can 
 delete this if you want to.
 
 '''
@@ -43,7 +43,9 @@ if len(argv) == 3:
                 obj[i] = [
                     l[splist[i - 1]:].replace("\n", ""), (splist[i - 1] - sp)
                 ]
+
             i += 1
+        obj["size"] = [len(max(ln, key=len)), i - 1]
 
     write()
 

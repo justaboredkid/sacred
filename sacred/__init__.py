@@ -3,16 +3,32 @@ from time import sleep
 import os
 import sys
 import json
+# import threading
 
 t = Terminal()
+""" class mover(threading.Thread):
+
+    def start(self):
+        pass
+
+    def run(self, x1, y1, mx, my, leng, loop):
+
+        printobj(self.getName, x1, y1)
+ """
+""" def main():
+    for x in range(4):
+        mythread = mover(name="Thread-{}".format(x + 1))
+        mythread.start() """
 
 
 class Scene(object):
 
-    def __init__(self):
+    def __init__(self, w=t.width, h=t.height, trpnt=True):
         self.objs = []
         self.pos = []
         self.txts = []
+        self.width = w
+        self.height = h
 
     def reset(self):
         self.objs.clear()
@@ -23,11 +39,18 @@ class Scene(object):
         if not os.path.isabs(file):
             file = os.path.abspath(os.path.dirname(sys.argv[0])) + "/" + file
         with open(file, "r") as o:
-            self.objs.append(json.load(o))
+            j = json.load(o)
+            self.objs.append(j)
+
+            if "size" not in j.keys():  # 0.1.0 compatibility
+                s = []
+                for i in j.values():
+                    s.append(len(i[0]))
+                j["size"] = [max(s), len(j)]
+
             self.pos.append([x, y])
             o.seek(0)
-            f = o.read()
-        return f
+        return j
 
     def txt(self, txt, x=0, y=0):
         self.txts.append([txt, x, y])
@@ -45,7 +68,7 @@ class Scene(object):
         self.objs.append(box)
         self.pos.append([x, y])
 
-    def render(self):
+    def render(self):  # deprecate this?
         i = 0
         for obj in self.objs:
             printobj(obj, self.pos[i][0], self.pos[i][1])
@@ -54,6 +77,15 @@ class Scene(object):
         for txt in self.txts:
             with t.location(txt[1], txt[2]):
                 print(txt[0])
+
+
+class Camera(object):
+
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    # HOW DO YOU DO THISSSS?!?!?!??!?
 
 
 class TooLarge(Exception):
@@ -83,10 +115,11 @@ def fill(txt, delay=0, diag=True):  # fills screen with txt
 
 def printobj(js, x, y):
     for item, pos in js.items():
-        if pos[1] + len(pos[0]) + x >= t.width:
-            raise TooLarge
-        with t.location(x, y + int(item)):
-            print(" " * pos[1] + pos[0])
+        if item != "size":
+            if pos[1] + len(pos[0]) + x >= t.width:
+                raise TooLarge
+            with t.location(x, y + int(item)):
+                print(" " * pos[1] + pos[0], flush=True)
 
 
 def txtbox(txt, x=0, y=t.height - 1):
@@ -97,3 +130,7 @@ def txtbox(txt, x=0, y=t.height - 1):
 
 def clear():  # clears screen
     print(t.clear())
+
+
+if "__name__" == "__main__":
+    print("What the heck are you doing?")
