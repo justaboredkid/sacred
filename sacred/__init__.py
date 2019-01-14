@@ -1,5 +1,6 @@
 from blessed import Terminal
 from time import sleep
+from shutil import get_terminal_size
 import os
 import sys
 import json
@@ -8,9 +9,10 @@ import re
 
 t = Terminal()
 screen = []
+width, height = get_terminal_size()
 
 
-def create_stage(w=t.width, h=t.height):
+def create_stage(w=width, h=height):
     global screen
     screen = [w * " " for i in range(0, h - 1)]
 
@@ -57,7 +59,7 @@ class Scene(object):
         except IndexError:
             raise TooLarge
 
-    def box(self, x=0, y=0, w=t.width, h=t.height - 1, fill=" "):
+    def box(self, x=0, y=0, w=width, h=height - 1, fill=" "):
         global screen
         try:
             if len(fill) > 1:
@@ -74,7 +76,7 @@ class Scene(object):
         except IndexError:
             raise TooLarge
 
-    def render(self): #for unadjusted stages. deprecated.
+    def render(self):  #for unadjusted stages. deprecated.
         global screen
         frame = "\n".join(screen) + "\n"
 
@@ -92,12 +94,12 @@ class Camera(object):
         self.move(x, y)
 
     def render(self):
-        r = screen[self.y:self.y + t.height]
-        r = [r[i][self.x:self.x + t.width] for i in range(0, len(r))]
+        r = screen[self.y:self.y + height]
+        r = [r[i][self.x:self.x + width] for i in range(0, len(r))
+            ]  # can't think of any better ideas
 
+        sys.stdout.flush()
         sys.stdout.write("\n".join(r) + "\n")
-
-    # HOW DO YOU DO THISSSS?!?!?!??!?
 
 
 class TooLarge(Exception):
@@ -108,7 +110,7 @@ class TooLarge(Exception):
         print(t.bold_red_on_bright_yellow("Scene exceeds terminal width"))
         print(
             t.bold_white_on_green(
-                "User: If possible, maximize the terminal window.\nDev: Make sure your x values are in check."
+                "User: If possible, maximize the terminal window.\nDev: Make sure your x and y values are in check."
             ))
 
 
@@ -116,23 +118,23 @@ def fill(txt, delay=0, diag=True):  # fills screen with txt
     if len(txt) > 1:
         raise ValueError  # allow only ONE char
     if diag:
-        for _ in range(0, (t.height - 2)):
-            print(txt * (t.width - 1))
+        for _ in range(0, (height - 2)):
+            print(txt * (width - 1))
             sleep(delay)
     else:
-        for _ in range(0, t.height - 1):
-            print(txt * (t.width - 1))
+        for _ in range(0, height - 1):
+            print(txt * (width - 1))
             sleep(delay)
 
 
-def txtbox(txt, x=0, y=t.height - 1):
+def txtbox(txt, x=0, y=height - 1):
     with t.location(x, y):
         i = input(txt)
         return i
 
 
 def clear():  # clears screen
-    print((t.width * " " + "\n") * t.height)
+    print((width * " " + "\n") * height)
 
 
 if "__name__" == "__main__":

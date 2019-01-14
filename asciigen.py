@@ -34,7 +34,7 @@ if len(argv) == 3:
 
         for l in ln:
             sp = min(s for s in splist)
-            if sp > 5:
+            if sp > 10:
                 obj[i] = [
                     l[splist[i - 1]:].replace("\n", ""),
                     round((splist[i - 1] - sp) / 5)
