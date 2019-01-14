@@ -74,7 +74,7 @@ class Scene(object):
         except IndexError:
             raise TooLarge
 
-    def render(self): #for unadjusted stages. deprecated.
+    def render(self):  #for unadjusted stages. deprecated.
         global screen
         frame = "\n".join(screen) + "\n"
 
@@ -95,6 +95,7 @@ class Camera(object):
         r = screen[self.y:self.y + t.height]
         r = [r[i][self.x:self.x + t.width] for i in range(0, len(r))]
 
+        sys.stdout.flush()
         sys.stdout.write("\n".join(r) + "\n")
 
     # HOW DO YOU DO THISSSS?!?!?!??!?
