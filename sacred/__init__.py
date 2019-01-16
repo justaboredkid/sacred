@@ -1,6 +1,7 @@
 from blessed import Terminal
 from time import sleep
 from shutil import get_terminal_size
+from multiprocessing import Process, Lock
 import os
 import sys
 import json
@@ -82,6 +83,12 @@ class Scene(object):
 
         sys.stdout.write(frame)
 
+    def export(self):
+        global screen
+        frame = "\n".join(screen) + "\n"
+
+        return frame
+
 
 class Camera(object):
     global screen
@@ -98,8 +105,15 @@ class Camera(object):
         r = [r[i][self.x:self.x + width] for i in range(0, len(r))
             ]  # can't think of any better ideas
 
-        sys.stdout.flush()
-        sys.stdout.write("\n".join(r) + "\n")
+        def f(i):
+            sys.stdout.flush()
+            with t.location(0, i):
+                sys.stdout.write("\n\n".join(r[i::2]) + "\n")
+
+        for i in range(2):
+            Process(target=f, args=(i,)).start()
+
+        t.location(0, height - 1)
 
 
 class TooLarge(Exception):
