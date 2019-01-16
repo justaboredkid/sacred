@@ -49,6 +49,7 @@ class Scene(object):
                     j["size"] = [max(s), len(j)]
             return j
         except IndexError:
+            print("Scene.obj(): {}".format(file))
             raise TooLarge
 
     def txt(self, txt: str, x=0, y=0):
@@ -57,6 +58,7 @@ class Scene(object):
             raw = re.sub(r"\x1b\[\d{1,3}m|\x1b\(B\x1b\[m", "", txt)  #ANSI stuff
             screen[y] = screen[y][:x] + txt + screen[y][x + len(raw):]
         except IndexError:
+            print("Scene.txt(): {}".format(raw))
             raise TooLarge
 
     def box(self, x=0, y=0, w=width, h=height - 1, fill=" "):
@@ -74,6 +76,7 @@ class Scene(object):
                 screen[y + i + 1] = screen[y + i][:x] + "|" + fill * (
                     w - 2) + "|" + screen[y + i][x + w:]
         except IndexError:
+            print("Scene.box: w={} h={}".format(w, h))
             raise TooLarge
 
     def render(self):  #for unadjusted stages. deprecated.
@@ -127,7 +130,6 @@ class Camera(object):
 class TooLarge(Exception):
 
     def __init__(self):
-        clear()
 
         print(t.bold_red_on_bright_yellow("Scene exceeds terminal width"))
         print(
