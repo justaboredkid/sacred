@@ -1,12 +1,11 @@
 from blessed import Terminal
 from time import sleep
 from shutil import get_terminal_size
-from multiprocessing import Process
+from multiprocessing import Process, Lock
 import os
 import sys
 import json
 import re
-# import threading
 
 t = Terminal()
 screen = []
@@ -105,14 +104,18 @@ class Camera(object):
         r = [r[i][self.x:self.x + width] for i in range(0, len(r))
             ]  # can't think of any better ideas
         if multi:
+            lock = Lock()
 
-            def f(i):
+            def f(l, i):
+                l.acquire()
+
                 sys.stdout.flush()
                 with t.location(0, i):
                     sys.stdout.write("\n\n".join(r[i::2]) + "\n")
+                l.release()
 
             for i in range(2):
-                Process(target=f, args=(i,)).start()
+                Process(target=f, args=(lock, i)).start()
 
         else:
             sys.stdout.flush()
