@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name='sacred_tui',
-    version='0.1.1',
+    version='0.2',
     description='Python library for ASCII art import and TUI development',
     url='https://github.com/justaboredkid/sacred',
     author='justaboredkid',
@@ -19,4 +19,7 @@ setup(
         'OSI Approved :: GNU General Public License v3 (GPLv3)',
         'Programming Language :: Python :: 3',
     ],
-    zip_safe=False)
+    zip_safe=False,
+    entry_points={
+        'console_scripts': ['asciigen = asciigen:main'],
+    })

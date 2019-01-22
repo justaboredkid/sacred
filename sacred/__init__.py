@@ -122,7 +122,8 @@ class Camera(object):
 
         else:
             sys.stdout.flush()
-            sys.stdout.write("\n".join(r) + "\n")
+            with t.location(0, 0):
+                sys.stdout.write("\n".join(r) + "\n")
 
         t.location(0, height - 1)
 
