@@ -67,7 +67,7 @@ Wait a minute:
 *AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA the ship is falling apart!!!!*
   
 
-**Behold, sacred-tui.**
+## **Behold, sacred-tui.**
 ```
 import sacred
 
@@ -142,9 +142,18 @@ Ultimate Tic Tac Toe TERMINAL EDITION------------------------------------------
 |                                 |       |                                   |
 -------------------------------For best gameplay, use numpad and 80x24 terminal
 ```
+  
+  
+## *Wait a minute, I want a bigger scene, but `scene.render()` won't allow objects to exceed terminal size. EXPLAIN*
+
+That's where `Camera()` and `create_stage()` comes in.  
+
+`Camera.move()` allows you to move around the stage. Using `create_stage()` you can define an area that is bigger than the terminal.  
+
+This means you can move around your camera instead of creating individual frames just to view a different part of the large model.
 
   
-[Maniacal laughter](https://www.youtube.com/watch?v=gY2k8_sSTsE)
+[*Maniacal laughter*](https://www.youtube.com/watch?v=gY2k8_sSTsE)
 
 
 
